@@ -1,0 +1,18 @@
+export const dynamic='force-dynamic';
+import Link from'next/link';
+import{ArrowUpRight,Code2,Database,Terminal,BrainCircuit,GraduationCap,BriefcaseBusiness,ArrowRight}from'lucide-react';
+import{Navbar}from'@/components/Navbar';import{Hero}from'@/components/Hero';import{Reveal}from'@/components/Reveal';import{ProjectCard}from'@/components/ProjectCard';import{ScrollStatement}from'@/components/ScrollStatement';import{Archive}from'@/components/Archive';import{Certificates}from'@/components/Certificates';import{Footer}from'@/components/Footer';
+import{TechLogoGrid}from'@/components/TechLogoGrid';
+import{profile}from'@/content/profile';import{getPublicRepos}from'@/lib/github';import{selectedProjects}from'@/lib/projects';import{getPublishedCredentials}from'@/lib/supabase';
+const icons=[Code2,Database,Terminal,BrainCircuit];
+export default async function Home(){
+ const [repos,credentials]=await Promise.all([getPublicRepos(),getPublishedCredentials()]);
+ return <><Navbar/><main><Hero repoCount={repos.length}/>
+  <section className="work-section section-ivory" id="work"><div className="container work-layout"><Reveal className="work-intro"><span className="overline">01 / SELECTED PROJECTS</span><h2>Project<br/><em>Showcase.</em></h2><p>Proyek pilihan yang memperlihatkan cara saya menyusun antarmuka, mengelola data, dan membangun aplikasi end-to-end.</p><Link href="/projects" className="text-link">All projects <ArrowUpRight size={17}/></Link></Reveal><div className="work-cards">{selectedProjects.map((p,i)=><ProjectCard key={p.slug} project={p} index={i}/>)}</div></div></section>
+  <section className="profile-section section-ivory" id="expertise"><div className="container profile-grid"><Reveal><div className="section-heading"><span className="overline">02 / TECHNOLOGY</span><h2>Skills <em>& tools.</em></h2><p>Teknologi yang saya gunakan dalam beragam proyek, dari aplikasi web hingga sistem dan eksperimen data.</p></div><TechLogoGrid/></Reveal>
+   <Reveal><div className="section-heading"><span className="overline">03 / EDUCATION & ROLE</span><h2>About the <em>work.</em></h2></div><div className="timeline"><div><GraduationCap size={23}/><section><span>EDUCATION / ONGOING</span><h3>S1 Teknik Informatika</h3><p>Universitas Pamulang (UNPAM)</p></section></div><div><BriefcaseBusiness size={23}/><section><span>PROFESSIONAL ROLE</span><h3>Co-Founder & Tech Lead</h3><p>CV. Prabaswara Gandar Prima</p></section></div><div><Terminal size={23}/><section><span>DEVELOPMENT APPROACH</span><h3>Systems from idea to deployment</h3><p>Backend engineering, product UI, Linux operations, applied ML.</p></section></div></div></Reveal>
+  </div><div className="container capability-row">{profile.expertise.map((x,i)=>{const Icon=icons[i];return <Reveal key={x.title} delay={i*.05}><article className="capability-item"><Icon size={24}/><h3>{x.title}</h3><p>{x.description}</p></article></Reveal>})}</div></section>
+  <ScrollStatement/><Certificates items={credentials} compact/><Archive repos={repos}/>
+  <section className="collab-band section-ivory"><div className="container"><Reveal><div className="collab-inner"><span className="overline">LET'S COLLABORATE</span><h2>Punya ide atau proyek?</h2><p>Saya terbuka untuk diskusi teknis, kolaborasi, dan pengembangan sistem dengan kebutuhan yang jelas.</p><Link className="btn btn-light" href="/contact">Hubungi saya <ArrowUpRight size={17}/></Link><div className="collab-art"/></div></Reveal></div></section>
+ </main><Footer/></>
+}

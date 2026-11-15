@@ -1,0 +1,10 @@
+import fs from 'node:fs';import assert from'node:assert/strict';
+const path='lib/projects.ts';const src=fs.readFileSync(path,'utf-8');const profile=fs.readFileSync('content/profile.ts','utf-8');const sql=fs.readFileSync('supabase/credentials.sql','utf-8');
+for(const t of ['STRYDE','NEWSHUB','MISTER KOMPUTER','IDX Screener Pro'])assert(src.includes(t),`Missing ${t}`);
+for(const t of ['Tri Puji Antoro','Co-Founder & Tech Lead','CV. Prabaswara Gandar Prima','Universitas Pamulang'])assert(profile.includes(t),`Missing profile ${t}`);
+assert(sql.includes('enable row level security'));
+assert(sql.includes('torrayz-private-credentials'));
+const creds=fs.readFileSync('components/Certificates.tsx','utf-8');assert(creds.includes('Evidence not published yet'));
+for(const p of ['app/contact/page.tsx','app/admin/page.tsx','app/projects/page.tsx','app/about/page.tsx','app/certificates/page.tsx'])assert(fs.existsSync(p),`Missing route ${p}`);
+const all=fs.readdirSync('lib').map(x=>fs.readFileSync('lib/'+x,'utf8')).join('');assert(!/sb_secret_|service_role/.test(all),'Secret credentials in public library');
+const logos=fs.readFileSync('components/TechLogoGrid.tsx','utf8');assert(logos.includes('/skill-logos/'));assert(logos.includes('PostgreSQL')&&logos.includes('TypeScript'));console.log('Content checks passed: routes, profile, RLS design, brand logos and credential transparency');

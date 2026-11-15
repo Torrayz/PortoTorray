@@ -1,0 +1,12 @@
+import type{Metadata}from'next';import{notFound}from'next/navigation';import Link from'next/link';
+import{ArrowLeft,ArrowUpRight,GitBranch,Check,Compass}from'lucide-react';
+import{Navbar}from'@/components/Navbar';import{Footer}from'@/components/Footer';import{projects,getProject}from'@/lib/projects';
+type Params={params:Promise<{slug:string}>};
+export function generateStaticParams(){return projects.map(p=>({slug:p.slug}))}
+export async function generateMetadata({params}:Params):Promise<Metadata>{const{slug}=await params;const p=getProject(slug);return{title:p?.name||'Project',description:p?.summary}}
+export default async function Detail({params}:Params){const{slug}=await params;const p=getProject(slug);if(!p)notFound();
+ return <><Navbar/><main className="inner-page"><section className="case-hero container"><Link className="back-link" href="/projects"><ArrowLeft size={17}/> All projects</Link><span className="overline">{p.kicker} / {p.year}</span><h1>{p.name}<em>.</em></h1><p>{p.headline}</p><div className="case-tags">{p.stack.map(t=><span key={t}>{t}</span>)}</div><div className="case-actions"><a className="btn btn-dark" href={p.repo} target="_blank" rel="noopener noreferrer"><GitBranch size={17}/> GitHub repository <ArrowUpRight size={17}/></a>{p.live&&<a className="btn btn-border" href={p.live} target="_blank" rel="noopener noreferrer">Live preview <ArrowUpRight size={17}/></a>}</div></section>
+  <section className={'case-art container project-'+p.tint}><div className="case-art-inner"><span>PROJECT {p.number} / TORRAYZ</span><strong>{p.name}</strong><p>{p.category} / {p.year}</p></div></section>
+  <section className="container case-content"><article><span className="overline">01 / CONTEXT</span><h2>Why this project?</h2><p>{p.objective}</p></article><article><span className="overline">02 / IMPLEMENTATION</span><h2>Building approach.</h2><p>{p.contribution}</p><ul>{p.highlights.map(h=><li key={h}><Check size={18}/>{h}</li>)}</ul></article><article><span className="overline">03 / NEXT ITERATION</span><h2>What comes next.</h2><ul>{p.nextSteps.map(h=><li key={h}><Compass size={18}/>{h}</li>)}</ul></article></section>
+  <section className="container case-last"><Link href="/projects">Explore other projects <ArrowUpRight size={18}/></Link></section>
+ </main><Footer/></>}

@@ -1,0 +1,2 @@
+import Link from'next/link';
+export function Brand(){return <Link href="/" className="brand" aria-label="Torrayz — Homepage"><span className="brand-emblem" aria-hidden="true"><svg viewBox="0 0 70 58"><path fill="currentColor" d="M10 7H65L58 18H39L23 52H10L26 18H4Z"/></svg></span><span className="brand-copy"><strong>TORRAYZ</strong><small>DEVELOPER PORTFOLIO</small></span></Link>}

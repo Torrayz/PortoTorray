@@ -1,0 +1,2 @@
+import Link from'next/link';import{Navbar}from'@/components/Navbar';
+export default function NotFound(){return <><Navbar/><main className="container inner-hero"><span className="overline">404 / PAGE NOT FOUND</span><h1>Page not found.</h1><p>Halaman ini mungkin sudah berubah.</p><Link className="btn btn-dark" href="/">Back to home ↗</Link></main></>}

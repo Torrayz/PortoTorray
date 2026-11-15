@@ -1,0 +1,4 @@
+export const dynamic='force-dynamic';
+import type{Metadata}from'next';import{Navbar}from'@/components/Navbar';import{Footer}from'@/components/Footer';import{Archive}from'@/components/Archive';import{ProjectCard}from'@/components/ProjectCard';import{getPublicRepos}from'@/lib/github';import{selectedProjects}from'@/lib/projects';
+export const metadata:Metadata={title:'Projects'};
+export default async function Projects(){const repos=await getPublicRepos();return <><Navbar/><main className="inner-page"><section className="container inner-hero"><span className="overline">WORK / ENGINEERING NOTES</span><h1>Projects, <em>in context.</em></h1><p>Studi kasus untuk karya pilihan, diikuti katalog lengkap repository publik dari GitHub.</p></section><section className="container inner-selected"><div className="work-cards">{selectedProjects.map((p,i)=><ProjectCard key={p.slug} project={p} index={i}/>)}</div></section><Archive repos={repos}/></main><Footer/></>}

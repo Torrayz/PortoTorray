@@ -1,0 +1,3 @@
+import type{Metadata}from'next';import{Navbar}from'@/components/Navbar';import{AdminCerts}from'@/components/AdminCerts';
+export const metadata:Metadata={title:'Owner studio',robots:{index:false,follow:false}};
+export default function AdminPage(){return <><Navbar/><main className="inner-page"><section className="container inner-hero admin-hero"><span className="overline">PRIVATE / CREDENTIALS MANAGEMENT</span><h1>Studio <em>management.</em></h1><p>Halaman admin ini hanya bisa membaca dan mengubah data setelah akun Supabase terautentikasi dan dinyatakan sebagai owner.</p></section><div className="container"><AdminCerts/></div></main></>}
